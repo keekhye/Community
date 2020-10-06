@@ -1,0 +1,75 @@
+package com.nowcoder;
+
+import com.nowcoder.community.dao.DiscussPostMapper;
+import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.User;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Date;
+import java.util.List;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ContextConfiguration(classes = CommunityApplication.class)
+public class MapperTests {
+    @Autowired(required = false)
+    private UserMapper userMapper;
+
+    @Autowired(required = false)
+    private DiscussPostMapper discussPostMapper;
+
+    @Test
+    public void testSelectUser(){
+        User user = userMapper.selectById(101);
+        System.out.println(user);
+        User nocoder11 = userMapper.selectByName("nowcoder11");
+        System.out.println(nocoder11);
+        User user1 = userMapper.selectByEmail("nowcoder@sina.com");
+        System.out.println(user1);
+    }
+
+    @Test
+    public void testInsertUser(){
+        User user = new User();
+        user.setUsername("test");
+        user.setPassword("123456");
+        user.setSalt("abc");
+        user.setEmail("test@qq.com");
+        user.setHeaderUrl("http://www.nowcoder.com/101.png");
+        user.setCreateTime(new Date());
+
+        int i = userMapper.insertUser(user);
+        System.out.println(i);
+        System.out.println(user.getId());
+    }
+
+    @Test
+    public void testUpdateUser(){
+        int i = userMapper.updateHeader(150, "http://www.nowcoder.com/102.png");
+        System.out.println(i);
+
+        int i1 = userMapper.updatePassword(150, "321");
+        System.out.println(i1);
+
+        int i2 = userMapper.updateStatus(150, 1);
+        System.out.println(i2);
+
+    }
+
+    @Test
+    public void testSelectPosts(){
+        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(149, 0, 10);
+        for(DiscussPost post : discussPosts){
+            System.out.println(post);
+        }
+        int i = discussPostMapper.selectDiscussPostRows(149);
+        System.out.println(i);
+    }
+
+}
