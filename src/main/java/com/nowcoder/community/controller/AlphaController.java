@@ -26,28 +26,41 @@ public class AlphaController {
         return "Hello Spring Boot.";
     }
 
+
     @RequestMapping("/data")
     @ResponseBody
-    public String getData() {
+    public String getData(){
         return alphaService.find();
     }
 
     @RequestMapping("/http")
-    public void http(HttpServletRequest request, HttpServletResponse response) {
+    public void http(HttpServletRequest request, HttpServletResponse response){
         // 获取请求数据
+//        System.out.println(request.getMethod());
+//        System.out.println(request.getServletPath());
+//        Enumeration<String> enumeration = request.getHeaderNames();
+//        while (enumeration.hasMoreElements()) {
+//            String name = enumeration.nextElement();
+//            String value = request.getHeader(name);
+//            System.out.println(name + ": " + value);
+//        }
+
         System.out.println(request.getMethod());
         System.out.println(request.getServletPath());
-        Enumeration<String> enumeration = request.getHeaderNames();
-        while (enumeration.hasMoreElements()) {
-            String name = enumeration.nextElement();
+        Enumeration<String> enumaration = request.getHeaderNames();
+        while(enumaration.hasMoreElements()){
+            String name = enumaration.nextElement();
             String value = request.getHeader(name);
-            System.out.println(name + ": " + value);
+            System.out.println(name + ":" + value);
         }
+
         System.out.println(request.getParameter("code"));
 
         // 返回响应数据
+//        response.setContentType("text/html;charset=utf-8");
         response.setContentType("text/html;charset=utf-8");
         try (
+                //输出流，自动关闭
                 PrintWriter writer = response.getWriter();
         ) {
             writer.write("<h1>牛客网</h1>");
@@ -59,6 +72,7 @@ public class AlphaController {
     // GET请求
 
     // /students?current=1&limit=20
+    //只处理get请求
     @RequestMapping(path = "/students", method = RequestMethod.GET)
     @ResponseBody
     public String getStudents(
@@ -71,6 +85,7 @@ public class AlphaController {
 
     // /student/123
     @RequestMapping(path = "/student/{id}", method = RequestMethod.GET)
+    //返回字符串
     @ResponseBody
     public String getStudent(@PathVariable("id") int id) {
         System.out.println(id);
@@ -89,10 +104,12 @@ public class AlphaController {
     // 响应HTML数据
 
     @RequestMapping(path = "/teacher", method = RequestMethod.GET)
+    //controller生成model和view数据传给模板引擎，即template下的html文件，渲染后返回
     public ModelAndView getTeacher() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("name", "张三");
-        mav.addObject("age", 30);
+       ModelAndView mav = new ModelAndView();
+       mav.addObject("name","张三");
+       mav.addObject("age",30);
+       //设置模板路径
         mav.setViewName("/demo/view");
         return mav;
     }
@@ -108,12 +125,14 @@ public class AlphaController {
     // Java对象 -> JSON字符串 -> JS对象
 
     @RequestMapping(path = "/emp", method = RequestMethod.GET)
+    //与响应html不同的是需要加上这个注解
     @ResponseBody
     public Map<String, Object> getEmp() {
         Map<String, Object> emp = new HashMap<>();
         emp.put("name", "张三");
         emp.put("age", 23);
         emp.put("salary", 8000.00);
+        //不需要另外做html了，打开网页就能看到
         return emp;
     }
 

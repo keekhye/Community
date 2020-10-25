@@ -29,7 +29,8 @@ public class AlphaService {
 //        System.out.println("销毁AlphaService");
     }
 
-    public String find() {
+
+    public String find(){
         return alphaDao.select();
     }
 

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+//非静态，需要声明模板引擎
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
 <head>
     <meta charset="UTF-8">
     <title>Teacher</title>
 </head>
 <body>
+    //从controller层获取变量，mav.addObject("name","张三");
     <p th:text="${name}"></p>
     <p th:text="${age}"></p>
 </body>

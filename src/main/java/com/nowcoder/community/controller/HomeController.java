@@ -32,7 +32,9 @@ public class HomeController {
         page.setRows(discussPostService.findDiscussPostRows(0));
         page.setPath("/index");
 
+        //list只存放每页显示的帖子
         List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(), page.getLimit());
+        //discussPosts存放了帖子和用户
         List<Map<String, Object>> discussPosts = new ArrayList<>();
         if (list != null) {
             for (DiscussPost post : list) {
@@ -43,6 +45,7 @@ public class HomeController {
                 discussPosts.add(map);
             }
         }
+
         model.addAttribute("discussPosts", discussPosts);
         return "/index";
     }

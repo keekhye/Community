@@ -26,7 +26,7 @@ public class MapperTests {
     private DiscussPostMapper discussPostMapper;
 
     @Test
-    public void testSelectUser() {
+    public void     testSelectUser() {
         User user = userMapper.selectById(101);
         System.out.println(user);
 

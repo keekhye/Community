@@ -56,6 +56,7 @@ public class CommunityApplicationTests implements ApplicationContextAware {
 	}
 
 	@Autowired
+	//指定注入bean的名字
 	@Qualifier("alphaHibernate")
 	private AlphaDao alphaDao;
 
